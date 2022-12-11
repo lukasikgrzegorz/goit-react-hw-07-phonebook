@@ -15,9 +15,10 @@ const ContactForm = () => {
     const name = form.elements.name.value;
     const number = form.elements.number.value;
     const isInBase = contacts.some(contact => contact.name === name);
+    const newContact = { name: name, number: number };
 
     if (!isInBase) {
-      dispatch(addContact(name, number));
+      dispatch(addContact(newContact));
       form.reset();
     } else {
       alert(`${name} is in use. Try another name.`);
