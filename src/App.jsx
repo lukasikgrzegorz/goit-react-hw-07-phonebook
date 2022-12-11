@@ -1,27 +1,24 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import css from './App.module.css';
 import ContactForm from './components/ContactForm/ContactForm';
 import Filter from './components/Filter/Filter';
 import ContactList from './components/ContactList/ContactList';
-import { useSelector } from 'react-redux';
-import { getContacts } from 'redux/selectors';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchContacts } from 'redux/operations';
+import { getError, getIsLoading } from 'redux/selectors';
 
 const App = () => {
-  const contacts = useSelector(getContacts);
-  const isMounted = useRef(false);
-
-  const KEY = 'Contacts';
+  const dispatch = useDispatch();
+  const isLoading = useSelector(getIsLoading);
+  const error = useSelector(getError);
 
   useEffect(() => {
-    if (isMounted.current) {
-      localStorage.setItem(KEY, JSON.stringify(contacts));
-    } else {
-      isMounted.current = true;
-    }
-  }, [contacts]);
+    dispatch(fetchContacts());
+  }, [dispatch]);
 
   return (
     <div className={css['container']}>
+      {isLoading && !error && <b>Request in progress...</b>}
       <h1>Phonebook</h1>
       <ContactForm />
 

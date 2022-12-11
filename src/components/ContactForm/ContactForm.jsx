@@ -1,7 +1,7 @@
 import React from 'react';
 import css from './ContactForm.module.css';
 import { useDispatch } from 'react-redux';
-import { addContact } from 'redux/contactsSlice';
+import { addContact } from 'redux/operations';
 import { useSelector } from 'react-redux';
 import { getContacts } from 'redux/selectors';
 
@@ -15,6 +15,7 @@ const ContactForm = () => {
     const name = form.elements.name.value;
     const number = form.elements.number.value;
     const isInBase = contacts.some(contact => contact.name === name);
+
     if (!isInBase) {
       dispatch(addContact(name, number));
       form.reset();
