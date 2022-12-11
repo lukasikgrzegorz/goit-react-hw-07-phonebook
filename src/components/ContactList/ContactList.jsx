@@ -18,9 +18,7 @@ const ContactList = () => {
   return (
     <ul>
       {contacts
-        .filter(contact =>
-          contact.name.toLowerCase().includes(filter.toLowerCase())
-        )
+        .filter(contact => contact.name.includes(filter))
         .map(contact => {
           return (
             <Contact key={contact.id}>
